@@ -14,15 +14,9 @@ class Demo extends Component {
   }
   
   delaunay;
-  nextHalfedge = (e) => { 
-    return (e % 3 === 2) ? e - 2 : e + 1; 
-  }
-  prevHalfedge = (e) => { 
-    return (e % 3 === 0 ) ? e + 2 : e - 1 ; 
-  }
 
   distance = (p1, p2) => {
-    return Math.sqrt(Math.pow(p1[0]-p2[0], 2)+Math.pow(p1[1]-p2[1], 2));
+    return Math.pow(p1[0]-p2[0], 2)+Math.pow(p1[1]-p2[1], 2);
   }
 
   findCenter = (p1, p2, p3, p4 = false) => {
@@ -70,29 +64,29 @@ class Demo extends Component {
   calculateMinMax = (e, e_opposite) => {
     //start p & end p
     var p1 = this.state.points[this.delaunay.triangles[e]];
-    var p2 = this.state.points[this.delaunay.triangles[this.nextHalfedge(e)]];
+    var p2 = this.state.points[this.delaunay.triangles[(e % 3 === 2) ? e - 2 : e + 1]];
 
-    var disE = this.distance(p1,p2);
+    var disE = Math.sqrt(this.distance(p1,p2));
     var minR, maxR, minO, maxO;
     var O3,O4;
     
     // another half edge exist -> not on convex hull
     if ( e_opposite !== -1 ){
-      var q3 = this.state.points[this.delaunay.triangles[this.prevHalfedge(e)]];
-      var q4 = this.state.points[this.delaunay.triangles[this.prevHalfedge(e_opposite)]];
+      var q3 = this.state.points[this.delaunay.triangles[(e % 3 === 0 ) ? e + 2 : e - 1]];
+      var q4 = this.state.points[this.delaunay.triangles[(e_opposite % 3 === 0 ) ? e_opposite + 2 : e_opposite - 1]];
 
       var Cres = this.findCenter(p1, p2, q3, q4);
       O3 = Cres.O3;
       O4 = Cres.O4;
-      var R3 = this.distance(p1,O3);
-      var R4 = this.distance(p1,O4);
+      var R3 = Math.sqrt(this.distance(p1,O3));
+      var R4 = Math.sqrt(this.distance(p1,O4));
       //q3 obtuse angle
-      if (Math.pow(this.distance(p1,q3), 2) + Math.pow(this.distance(p2,q3), 2) < Math.pow(disE, 2)){
+      if (this.distance(p1,q3) + this.distance(p2,q3) < Math.pow(disE, 2)){
         minR = R3;
         minO = O3;
         maxR = R4;
         maxO = O4;
-      } else if (Math.pow(this.distance(p1,q4), 2) + Math.pow(this.distance(p2,q4), 2) < Math.pow(disE, 2)){  //q4 obtuse angle
+      } else if (this.distance(p1,q4) + this.distance(p2,q4) < Math.pow(disE, 2)){  //q4 obtuse angle
         minR = R4;
         minO = O4;
         maxR = R3;
@@ -115,12 +109,12 @@ class Demo extends Component {
       maxR = Number.MAX_SAFE_INTEGER; 
       maxO = false;
 
-      var q = this.state.points[this.delaunay.triangles[this.prevHalfedge(e)]];
+      var q = this.state.points[this.delaunay.triangles[(e % 3 === 0 ) ? e + 2 : e - 1]];
       O3 = this.findCenter(p1, p2, q).O3;
       
       //obtuse angle
-      if(Math.pow(this.distance(p1,q), 2) + Math.pow(this.distance(p2,q), 2) < Math.pow(disE, 2)){
-        minR = this.distance(p1,O3);
+      if(this.distance(p1,q) + this.distance(p2,q) < Math.pow(disE, 2)){
+        minR = Math.sqrt(this.distance(p1,O3));
         minO = O3;
       } else {
         minR = disE / 2;
@@ -151,10 +145,7 @@ class Demo extends Component {
           newDT.push(curE);
         }
       }
-      this.setState({ DTedges: newDT },() => {
-        // console.log("=====DT=====");
-        // console.log(this.state.DTedges);
-      });
+      this.setState({ DTedges: newDT });
     }
   }
 
@@ -178,7 +169,7 @@ class Demo extends Component {
                 key={i}
                 name={String(i)}
                 points={[edge.p1[0], edge.p1[1], edge.p2[0], edge.p2[1]]}
-                stroke='blue'
+                stroke='#99D9EA'
                 strokeWidth={2}
                 onmouseover={e => {
                   this.setState({ mouseOn: Number(e.target.attrs.name) });

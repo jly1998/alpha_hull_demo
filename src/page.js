@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Checkbox, Slider, InputNumber, Card, Divider } from 'antd';
+import { Row, Col, Checkbox, Slider, InputNumber, Card } from 'antd';
 import Demo from './demo';
 
 class Page extends Component {
@@ -52,10 +52,10 @@ class Page extends Component {
           <Card title="Alpha Hull" style={{ margin: '50px 50px 50px 0px' }}>
             <Row gutter={[0, 16]}>
               <Col span={24}>
-                <b>1. Calculate Delauny Triangulation</b>
+                <b>1. Calculate Delaunay Triangulation</b>
               </Col>
               <Col span={24}>
-                <Checkbox onChange={this.onDTChange}>show Delauny Triangulation</Checkbox>
+                <Checkbox onChange={this.onDTChange}>show Delaunay Triangulation</Checkbox>
               </Col>
               <Col span={24}>
                 <b>2. Calculate the minimum and maximum radius of all empty circles of all edges</b>
@@ -70,9 +70,7 @@ class Page extends Component {
                 <Checkbox onChange={this.onMaxChange}>show all maximum empty circles</Checkbox>
                 </Col>
               <Col span={24}>
-                <b>3. If alpha is in [min, max], </b>
-              </Col>
-              <Col span={24}>
+                <b>3. If alpha is in [min, max], </b><br />
                 <b>the edge is in the alpha hull</b>
               </Col>
               <Col span={12}>
@@ -97,13 +95,11 @@ class Page extends Component {
                 />
               </Col>
               <Col span={24}>
-                <Divider />
+                <br />
+                <b>◾ Click to add point</b>
               </Col>
               <Col span={24}>
-                <b>Click to add point</b>
-              </Col>
-              <Col span={24}>
-                <b>Points are draggable</b>
+                <b>◾ Points are draggable</b>
               </Col>
             </Row>
           </Card>
