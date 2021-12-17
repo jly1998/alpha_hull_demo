@@ -169,7 +169,7 @@ class Demo extends Component {
 
   render() {
     return (
-      <Stage width={window.innerWidth*0.6} height={window.innerHeight}
+      <Stage width={window.innerWidth*0.65} height={window.innerHeight-160}
         onClick={(event)=>this.onClick(event)}  
       >
           <Layer visible={this.props.DTVisible}>

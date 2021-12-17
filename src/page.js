@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Checkbox, Slider, InputNumber, Card } from 'antd';
+import { Row, Col, Checkbox, Slider, InputNumber, Card, Divider } from 'antd';
 import Demo from './demo';
 
 class Page extends Component {
@@ -39,7 +39,7 @@ class Page extends Component {
     return (
       <Row>
         <Col span={16}>
-          <Card style={{ margin:'50px', width: window.innerWidth*0.6, height: window.innerHeight-50 }}>
+          <Card style={{ margin:'50px'}}>
             <Demo
               alpha={this.state.alpha}
               DTVisible={this.state.DTVisible}
@@ -49,29 +49,63 @@ class Page extends Component {
           </Card>
         </Col>
         <Col span={8}>
-          <Card style={{ margin:'50px'}}>
-          <Checkbox onChange={this.onDTChange}>show Delauny Triangulation</Checkbox>
-          <Checkbox onChange={this.onMinChange}>show all minimum empty circle</Checkbox>
-          <Checkbox onChange={this.onMaxChange}>show all maximum empty circle</Checkbox>
-          <Row>
-            <Col span={12}>
-              <Slider
-                min={0}
-                max={500}
-                onChange={this.onAlphaChange}
-                value={typeof this.state.alpha === 'number' ? this.state.alpha : 50}
-              />
-            </Col>
-            <Col span={4}>
-              <InputNumber
-                min={0}
-                max={500}
-                style={{ margin: '0 16px' }}
-                value={this.state.alpha}
-                onChange={this.onAlphaChange}
-              />
-            </Col>
-          </Row>
+          <Card title="Alpha Hull" style={{ margin: '50px 50px 50px 0px' }}>
+            <Row gutter={[0, 16]}>
+              <Col span={24}>
+                <b>1. Calculate Delauny Triangulation</b>
+              </Col>
+              <Col span={24}>
+                <Checkbox onChange={this.onDTChange}>show Delauny Triangulation</Checkbox>
+              </Col>
+              <Col span={24}>
+                <b>2. Calculate the minimum and maximum radius of all empty circles of all edges</b>
+              </Col>
+              <Col span={24}>
+                (move mouse onto an edge, show minimum and maximum circles of that single edge)
+              </Col>
+              <Col span={24}>
+                <Checkbox onChange={this.onMinChange}>show all minimum empty circles</Checkbox>
+              </Col>
+              <Col span={24}>
+                <Checkbox onChange={this.onMaxChange}>show all maximum empty circles</Checkbox>
+                </Col>
+              <Col span={24}>
+                <b>3. If alpha is in [min, max], </b>
+              </Col>
+              <Col span={24}>
+                <b>the edge is in the alpha hull</b>
+              </Col>
+              <Col span={12}>
+                Alpha: 
+              </Col>
+              <Col span={12}>
+                <InputNumber
+                  size="small" 
+                  min={0}
+                  max={500}
+                  style={{ margin: '0 16px' }}
+                  value={this.state.alpha}
+                  onChange={this.onAlphaChange}
+                />
+              </Col>
+              <Col span={24}>
+                <Slider
+                  min={0}
+                  max={500}
+                  onChange={this.onAlphaChange}
+                  value={typeof this.state.alpha === 'number' ? this.state.alpha : 50}
+                />
+              </Col>
+              <Col span={24}>
+                <Divider />
+              </Col>
+              <Col span={24}>
+                <b>Click to add point</b>
+              </Col>
+              <Col span={24}>
+                <b>Points are draggable</b>
+              </Col>
+            </Row>
           </Card>
         </Col>
       </Row>
