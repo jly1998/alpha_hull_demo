@@ -17,4 +17,4 @@ Online demo: http://ec2-18-219-94-240.us-east-2.compute.amazonaws.com:3000/
   - The minimum and maximum empty circles of a particular edge can be shown by moving the mouse onto it.
 - By adjusting the slider, the applet can show the alpha hull of different alpha.
 - Please open the demo page by computer browser.
-
+- Please let me know if the page was down
